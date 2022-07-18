@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" rel="stylesheet"> 
+  
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { 
+      font-size: 11px; 
+      text-align: center; 
+      position: fixed;
+      bottom: 10px;
+      color: white;
+    }
+
+    .attribution a { 
+      color: hsl(228, 56%, 59%); 
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Manrope', sans-serif;
+      background-color: hsl(218, 23%, 16%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background-color: hsl(217, 19%, 24%);
+      padding: 25px;
+      width: 20rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .neon-green {
+      color: hsl(150, 100%, 66%);
+    }
+
+    .light-cyan {
+      color: hsl(193, 38%, 86%);
+    }
+
+    .quote {
+      font-size: 28px;
+    }
+
+    .divider {
+      display: flex;
+      justify-content: center;
+    }
+
+    .divider img {
+      max-width: 100%;
+    }
+
+    .divider .desktop {
+      display: none;
+    }
+
+    .divider .mobile {
+      display: block;
+    }
+
+    .dice {
+      background-color: hsl(150, 100%, 66%);
+      border-radius: 100%;
+      width: 30px;
+      height: 30px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dice:hover {
+      box-shadow:
+      0 0 5px 5px hsl(193, 38%, 86%),
+      0 0 10px 10px hsl(150, 100%, 66%); /* middle magenta */
+    }
+
+    .dice-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: -50px;
+      margin-top: 20px;
+    }
+
+    h3 {
+      line-height: 30px;
+    }
+
+    @media only screen and (min-width: 600px) {
+      .divider .desktop {
+        display: block;
+      }
+      .divider .mobile {
+        display: none;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <small class="neon-green">Advice #<span id="id"></span></small>
+
+    <h3 class="light-cyan">
+      <small class="quote">“</small>
+      <span id="advice">loading...</span>
+      <small class="quote">”</small>
+    </h3>
+
+    <div class="divider">
+      <img class="desktop" src="images/pattern-divider-desktop.svg">
+      <img class="mobile" src="images/pattern-divider-mobile.svg">
+    </div>
+
+    <div class="dice-wrapper">
+      <div class="dice" onclick="getData()">
+          <img src="images/icon-dice.svg" alt="dice">
+      </div>
+    </div>
+
+  </div>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="https://github.com/ricko-v">ricko-v</a>.
+  </div>
+</body>
+<script>
+async function getData() {
+  const id = document.querySelector("#id");
+  const advice = document.querySelector("#advice");
+  const data = await fetch("https://api.adviceslip.com/advice");
+  data.json()
+  .then(res => {
+    id.innerHTML = res['slip']['id'];
+    advice.innerHTML = res['slip']['advice'];
+  });
+}
+
+getData();
+</script>
+</html>
